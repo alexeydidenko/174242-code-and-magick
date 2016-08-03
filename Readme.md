@@ -1,7 +1,7 @@
 # Личный проект «Код и Магия» [![Build status][travis-image]][travis-url] [![Dependency status][dependency-image]][dependency-url]
 
 * Студент: [Алексей Диденко](https://up.htmlacademy.ru/javascript/6/user/174242).
-* Наставник: `Неизвестно`.
+* Наставник: [Варя Степанова](https://up.htmlacademy.ru/javascript/6/user/148462).
 
 ---
 
