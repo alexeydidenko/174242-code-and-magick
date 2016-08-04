@@ -8,22 +8,19 @@ function getMessage(a, b) {
       } else {
         return "Я никуда не попал";
       }
-  }
 
-  if (typeof a == "number") {
+  } else if (typeof a == "number") {
       return "Я прыгнул на " + a * 100 + " сантиметров";
-  }
 
-  if (typeof a == "object" && typeof b =="undefined") {
+  } else if (typeof a == "object" && typeof b =="undefined") {
       if (Array.isArray(a) == true) {
         for (var i = 0; i < a.length; i++) {
           numberOfSteps += a[i];
         }
         return "Я прошёл " + numberOfSteps + " шагов";
       }
-  }
 
-  if (typeof a == "object" && typeof b =="object") {
+  } else if (typeof a == "object" && typeof b =="object") {
       if (Array.isArray(a) == true && Array.isArray(b) == true) {
         for (var i=0; i < a.length; i++) {
           distancePath += a[i]*b[i];
