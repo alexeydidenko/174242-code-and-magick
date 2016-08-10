@@ -395,8 +395,6 @@ window.Game = (function() {
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
-      var TEXT_COORDINATE_LEFT = 125;
-      var textCoordinateTop = 50;
       switch (this.state.currentStatus) {
         case Verdict.WIN:
           // Отрисовка черного многоугольника, который выступает в качестве тени.
@@ -429,8 +427,7 @@ window.Game = (function() {
                             'и ты победил!',
                             'Для продолжения нажмите "Пробел".'];
           for(var iWin = 0; iWin < winMessage.length; iWin++) {
-            this.ctx.fillText(winMessage[iWin], TEXT_COORDINATE_LEFT, textCoordinateTop);
-            textCoordinateTop += 20;
+            this.ctx.fillText(winMessage[iWin], 125, 50 + 20 * iWin);
           }
           console.log('you have won!');
           break;
@@ -466,8 +463,7 @@ window.Game = (function() {
                              'К сожалению Вы проиграли.',
                              'Начать заново - нажмите "Пробел".'];
           for(var iFail = 0; iFail < failMessage.length; iFail++) {
-            this.ctx.fillText(failMessage[iFail], TEXT_COORDINATE_LEFT, textCoordinateTop);
-            textCoordinateTop += 20;
+            this.ctx.fillText(failMessage[iFail], 125, 50 + 20 * iFail);
           }
           console.log('you have failed!');
           break;
@@ -501,8 +497,7 @@ window.Game = (function() {
           var pauseMessage = ['Игра поставлена на паузу.',
                               'Для продолжения нажмите "Пробел".'];
           for(var iPause = 0; iPause < pauseMessage.length; iPause++) {
-            this.ctx.fillText(pauseMessage[iPause], TEXT_COORDINATE_LEFT, textCoordinateTop);
-            textCoordinateTop += 20;
+            this.ctx.fillText(pauseMessage[iPause], 125, 50 + 20 * iPause);
           }
           console.log('game is on pause!');
           break;
@@ -540,8 +535,7 @@ window.Game = (function() {
                               'стрелять файерболами - "Shift".',
                               'Для продолжения нажмите "Пробел"' ];
           for(var iIntro = 0; iIntro < introMessage.length; iIntro++) {
-            this.ctx.fillText(introMessage[iIntro], TEXT_COORDINATE_LEFT, textCoordinateTop);
-            textCoordinateTop += 20;
+            this.ctx.fillText(introMessage[iIntro], 125, 50 + 20 * iIntro);
           }
           console.log('welcome to the game! Press Space to start');
           break;
