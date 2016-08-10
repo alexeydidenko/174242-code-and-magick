@@ -397,15 +397,146 @@ window.Game = (function() {
     _drawPauseScreen: function() {
       switch (this.state.currentStatus) {
         case Verdict.WIN:
+          // Отрисовка черного многоугольника, который выступает в качестве тени.
+          this.ctx.beginPath();
+          this.ctx.moveTo(140, 200);
+          this.ctx.lineTo(90, 120);
+          this.ctx.lineTo(140, 40);
+          this.ctx.lineTo(430, 40);
+          this.ctx.lineTo(480, 120);
+          this.ctx.lineTo(430, 200);
+          this.ctx.closePath();
+          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          this.ctx.fill();
+          // Отрисовка основного белого многоугольника, который выступает в качестве фона сообщения.
+          this.ctx.beginPath();
+          this.ctx.moveTo(130, 190);
+          this.ctx.lineTo(80, 110);
+          this.ctx.lineTo(130, 30);
+          this.ctx.lineTo(420, 30);
+          this.ctx.lineTo(470, 110);
+          this.ctx.lineTo(420, 190);
+          this.ctx.closePath();
+          this.ctx.fillStyle = '#FFFFFF';
+          this.ctx.fill();
+          // Текст выводимого сообщения.
+          this.ctx.font = '16px PT Mono';
+          this.ctx.textBaseline = 'hanging';
+          this.ctx.fillStyle = '#000000';
+          var winMessage = ['Огненный шар достиг цели',
+                            'и ты победил!',
+                            'Для продолжения нажмите "Пробел".'];
+          for(var iWin = 0; iWin < winMessage.length; iWin++) {
+            this.ctx.fillText(winMessage[iWin], 125, 50 + 20 * iWin);
+          }
           console.log('you have won!');
           break;
         case Verdict.FAIL:
+          // Отрисовка черного многоугольника, который выступает в качестве тени.
+          this.ctx.beginPath();
+          this.ctx.moveTo(140, 200);
+          this.ctx.lineTo(90, 120);
+          this.ctx.lineTo(140, 40);
+          this.ctx.lineTo(430, 40);
+          this.ctx.lineTo(480, 120);
+          this.ctx.lineTo(430, 200);
+          this.ctx.closePath();
+          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          this.ctx.fill();
+          // Отрисовка основного белого многоугольника, который выступает в качестве фона сообщения.
+          this.ctx.beginPath();
+          this.ctx.moveTo(130, 190);
+          this.ctx.lineTo(80, 110);
+          this.ctx.lineTo(130, 30);
+          this.ctx.lineTo(420, 30);
+          this.ctx.lineTo(470, 110);
+          this.ctx.lineTo(420, 190);
+          this.ctx.closePath();
+          this.ctx.fillStyle = '#FFFFFF';
+          this.ctx.fill();
+          // Текст выводимого сообщения.
+          this.ctx.font = '16px PT Mono';
+          this.ctx.textBaseline = 'hanging';
+          this.ctx.fillStyle = '#000000';
+          var failMessage = ['Незаметно подкралась тьма',
+                             'и поглотила Вас :-(',
+                             'К сожалению Вы проиграли.',
+                             'Начать заново - нажмите "Пробел".'];
+          for(var iFail = 0; iFail < failMessage.length; iFail++) {
+            this.ctx.fillText(failMessage[iFail], 125, 50 + 20 * iFail);
+          }
           console.log('you have failed!');
           break;
         case Verdict.PAUSE:
+          // Отрисовка черного многоугольника, который выступает в качестве тени.
+          this.ctx.beginPath();
+          this.ctx.moveTo(140, 200);
+          this.ctx.lineTo(90, 120);
+          this.ctx.lineTo(140, 40);
+          this.ctx.lineTo(430, 40);
+          this.ctx.lineTo(480, 120);
+          this.ctx.lineTo(430, 200);
+          this.ctx.closePath();
+          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          this.ctx.fill();
+          // Отрисовка основного белого многоугольника, который выступает в качестве фона сообщения.
+          this.ctx.beginPath();
+          this.ctx.moveTo(130, 190);
+          this.ctx.lineTo(80, 110);
+          this.ctx.lineTo(130, 30);
+          this.ctx.lineTo(420, 30);
+          this.ctx.lineTo(470, 110);
+          this.ctx.lineTo(420, 190);
+          this.ctx.closePath();
+          this.ctx.fillStyle = '#FFFFFF';
+          this.ctx.fill();
+          // Текст выводимого сообщения.
+          this.ctx.font = '16px PT Mono';
+          this.ctx.textBaseline = 'hanging';
+          this.ctx.fillStyle = '#000000';
+          var pauseMessage = ['Игра поставлена на паузу.',
+                              'Для продолжения нажмите "Пробел".'];
+          for(var iPause = 0; iPause < pauseMessage.length; iPause++) {
+            this.ctx.fillText(pauseMessage[iPause], 125, 50 + 20 * iPause);
+          }
           console.log('game is on pause!');
           break;
         case Verdict.INTRO:
+          // Отрисовка черного многоугольника, который выступает в качестве тени.
+          this.ctx.beginPath();
+          this.ctx.moveTo(140, 200);
+          this.ctx.lineTo(90, 120);
+          this.ctx.lineTo(140, 40);
+          this.ctx.lineTo(430, 40);
+          this.ctx.lineTo(480, 120);
+          this.ctx.lineTo(430, 200);
+          this.ctx.closePath();
+          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+          this.ctx.fill();
+          // Отрисовка основного белого многоугольника, который выступает в качестве фона сообщения.
+          this.ctx.beginPath();
+          this.ctx.moveTo(130, 190);
+          this.ctx.lineTo(80, 110);
+          this.ctx.lineTo(130, 30);
+          this.ctx.lineTo(420, 30);
+          this.ctx.lineTo(470, 110);
+          this.ctx.lineTo(420, 190);
+          this.ctx.closePath();
+          this.ctx.fillStyle = '#FFFFFF';
+          this.ctx.fill();
+          // Текст выводимого сообщения.
+          this.ctx.font = '16px PT Mono';
+          this.ctx.textBaseline = 'hanging';
+          this.ctx.fillStyle = '#000000';
+          var introMessage = ['Вас приветствует Пендальф Синий.',
+                              'Я умею перемещаться с помощью',
+                              'стрелок "Влево" и "Вправо",',
+                              'Прыгать - стрелка "Вверх",',
+                              'стрелять файерболами - "Shift".',
+                              'Для продолжения нажмите "Пробел"' ];
+          for(var iIntro = 0; iIntro < introMessage.length; iIntro++) {
+            this.ctx.fillText(introMessage[iIntro], 125, 50 + 20 * iIntro);
+          }
           console.log('welcome to the game! Press Space to start');
           break;
       }
