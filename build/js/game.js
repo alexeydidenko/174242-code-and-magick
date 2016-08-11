@@ -398,9 +398,9 @@ window.Game = (function() {
       function fragmentText(ctx, textMessage, maxWidth) {
         var words = textMessage.split(' '),
           lines = [],
-          line = "";
+          line = '';
         if (ctx.measureText(textMessage).width < maxWidth) {
-          return [text];
+          return [textMessage];
         }
         while (words.length > 0) {
           while (ctx.measureText(words[0]).width >= maxWidth) {
@@ -413,19 +413,19 @@ window.Game = (function() {
             }
           }
           if (ctx.measureText(line + words[0]).width < maxWidth) {
-            line += words.shift() + " ";
+            line += words.shift() + ' ';
           } else {
             lines.push(line);
-            line = "";
+            line = '';
           }
           if (words.length === 0) {
             lines.push(line);
           }
         }
-
         for(var iIntro = 0; iIntro < lines.length; iIntro++) {
           ctx.fillText(lines[iIntro], 125, 50 + 20 * iIntro);
         }
+        return lines;
       }
       var maxWidth = 310;
       var textMessage;
