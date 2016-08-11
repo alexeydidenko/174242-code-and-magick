@@ -395,6 +395,40 @@ window.Game = (function() {
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      function fragmentText(ctx, textMessage, maxWidth) {
+        var words = textMessage.split(' '),
+          lines = [],
+          line = "";
+        if (ctx.measureText(textMessage).width < maxWidth) {
+          return [text];
+        }
+        while (words.length > 0) {
+          while (ctx.measureText(words[0]).width >= maxWidth) {
+            var tmp = words[0];
+            words[0] = tmp.slice(0, -1);
+            if (words.length > 1) {
+              words[1] = tmp.slice(-1) + words[1];
+            } else {
+              words.push(tmp.slice(-1));
+            }
+          }
+          if (ctx.measureText(line + words[0]).width < maxWidth) {
+            line += words.shift() + " ";
+          } else {
+            lines.push(line);
+            line = "";
+          }
+          if (words.length === 0) {
+            lines.push(line);
+          }
+        }
+
+        for(var iIntro = 0; iIntro < lines.length; iIntro++) {
+          ctx.fillText(lines[iIntro], 125, 50 + 20 * iIntro);
+        }
+      }
+      var maxWidth = 310;
+      var textMessage;
       switch (this.state.currentStatus) {
         case Verdict.WIN:
           // Отрисовка черного многоугольника, который выступает в качестве тени.
@@ -423,12 +457,12 @@ window.Game = (function() {
           this.ctx.font = '16px PT Mono';
           this.ctx.textBaseline = 'hanging';
           this.ctx.fillStyle = '#000000';
-          var winMessage = ['Огненный шар достиг цели',
-                            'и ты победил!',
-                            'Для продолжения нажмите "Пробел".'];
-          for(var iWin = 0; iWin < winMessage.length; iWin++) {
-            this.ctx.fillText(winMessage[iWin], 125, 50 + 20 * iWin);
-          }
+          textMessage = 'Огненный шар достиг цели и ты победил! ' +
+                        'Для продолжения нажмите "Пробел".';
+          this.ctx.font = '16px PT Mono';
+          this.ctx.textBaseline = 'hanging';
+          this.ctx.fillStyle = '#000000';
+          fragmentText(this.ctx, textMessage, maxWidth);
           console.log('you have won!');
           break;
         case Verdict.FAIL:
@@ -458,13 +492,12 @@ window.Game = (function() {
           this.ctx.font = '16px PT Mono';
           this.ctx.textBaseline = 'hanging';
           this.ctx.fillStyle = '#000000';
-          var failMessage = ['Незаметно подкралась тьма',
-                             'и поглотила Вас :-(',
-                             'К сожалению Вы проиграли.',
-                             'Начать заново - нажмите "Пробел".'];
-          for(var iFail = 0; iFail < failMessage.length; iFail++) {
-            this.ctx.fillText(failMessage[iFail], 125, 50 + 20 * iFail);
-          }
+          textMessage = 'Незаметно подкралась тьма и поглотила Вас :-( ' +
+                        'К сожалению Вы проиграли. Начать заново - нажмите "Пробел".';
+          this.ctx.font = '16px PT Mono';
+          this.ctx.textBaseline = 'hanging';
+          this.ctx.fillStyle = '#000000';
+          fragmentText(this.ctx, textMessage, maxWidth);
           console.log('you have failed!');
           break;
         case Verdict.PAUSE:
@@ -494,11 +527,11 @@ window.Game = (function() {
           this.ctx.font = '16px PT Mono';
           this.ctx.textBaseline = 'hanging';
           this.ctx.fillStyle = '#000000';
-          var pauseMessage = ['Игра поставлена на паузу.',
-                              'Для продолжения нажмите "Пробел".'];
-          for(var iPause = 0; iPause < pauseMessage.length; iPause++) {
-            this.ctx.fillText(pauseMessage[iPause], 125, 50 + 20 * iPause);
-          }
+          textMessage = 'Игра поставлена на паузу. Для продолжения нажмите "Пробел".';
+          this.ctx.font = '16px PT Mono';
+          this.ctx.textBaseline = 'hanging';
+          this.ctx.fillStyle = '#000000';
+          fragmentText(this.ctx, textMessage, maxWidth);
           console.log('game is on pause!');
           break;
         case Verdict.INTRO:
@@ -525,18 +558,13 @@ window.Game = (function() {
           this.ctx.fillStyle = '#FFFFFF';
           this.ctx.fill();
           // Текст выводимого сообщения.
+          textMessage = 'Вас приветствует Пендальф Синий. Я умею перемещаться с помощью ' +
+                        'стрелок "Влево" и "Вправо", Прыгать - стрелка "Вверх", ' +
+                        'стрелять файерболами - "Shift". Для продолжения нажмите "Пробел"';
           this.ctx.font = '16px PT Mono';
           this.ctx.textBaseline = 'hanging';
           this.ctx.fillStyle = '#000000';
-          var introMessage = ['Вас приветствует Пендальф Синий.',
-                              'Я умею перемещаться с помощью',
-                              'стрелок "Влево" и "Вправо",',
-                              'Прыгать - стрелка "Вверх",',
-                              'стрелять файерболами - "Shift".',
-                              'Для продолжения нажмите "Пробел"' ];
-          for(var iIntro = 0; iIntro < introMessage.length; iIntro++) {
-            this.ctx.fillText(introMessage[iIntro], 125, 50 + 20 * iIntro);
-          }
+          fragmentText(this.ctx, textMessage, maxWidth);
           console.log('welcome to the game! Press Space to start');
           break;
       }
