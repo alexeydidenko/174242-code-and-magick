@@ -446,7 +446,6 @@ window.Game = (function() {
         ctx.fillStyle = '#FFFFFF';
         ctx.fill();
         // Отрисовка текста.
-        ctx.font = fontSize + 'px PT Mono';
         ctx.fillStyle = '#000000';
         for(var i = 0; i < lines.length; i++) {
           ctx.fillText(lines[i], x - maxWidth / 2, y - (cloudHeight / 2) + (fontSize + 10) + (fontSize + 10) * i);
@@ -454,7 +453,8 @@ window.Game = (function() {
         return lines;
       }
       var fontSize = 16;
-      var maxWidth = fontSize * 13;
+      this.ctx.font = fontSize + 'px PT Mono';
+      var maxWidth = fontSize * 20;
       var textMessage;
       switch (this.state.currentStatus) {
         case Verdict.WIN:
