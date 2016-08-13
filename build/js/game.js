@@ -395,7 +395,7 @@ window.Game = (function() {
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
-      function fragmentText(ctx, textMessage, maxWidth) {
+      function fragmentText(ctx, textMessage, maxWidth, x, y) {
         var words = textMessage.split(' '),
           lines = [],
           line = '';
@@ -422,149 +422,63 @@ window.Game = (function() {
             lines.push(line);
           }
         }
-        for(var iIntro = 0; iIntro < lines.length; iIntro++) {
-          ctx.fillText(lines[iIntro], 125, 50 + 20 * iIntro);
+        var cloudHeight = (fontSize + 10) * lines.length + 20;
+        //Отрисовка черного многоугольника, который выступает в качестве тени.
+        ctx.beginPath();
+        ctx.moveTo(x + 10 - maxWidth / 2, y + 10 + cloudHeight / 2);
+        ctx.lineTo(x - 40 - maxWidth / 2, y + 10);
+        ctx.lineTo(x + 10 - maxWidth / 2, y + 10 - cloudHeight / 2);
+        ctx.lineTo(x + 10 + maxWidth / 2, y + 10 - cloudHeight / 2);
+        ctx.lineTo(x + 60 + maxWidth / 2, y + 10);
+        ctx.lineTo(x + 10 + maxWidth / 2, y + 10 + cloudHeight / 2);
+        ctx.closePath();
+        // Отрисовка основного белого многоугольника, который выступает в качестве фона сообщения.
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(x - maxWidth / 2, y + cloudHeight / 2);
+        ctx.lineTo(x - 50 - maxWidth / 2, y);
+        ctx.lineTo(x - maxWidth / 2, y - cloudHeight / 2);
+        ctx.lineTo(x + maxWidth / 2, y - cloudHeight / 2);
+        ctx.lineTo(x + 50 + maxWidth / 2, y);
+        ctx.lineTo(x + maxWidth / 2, y + cloudHeight / 2);
+        ctx.closePath();
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fill();
+        // Отрисовка текста.
+        ctx.font = fontSize + 'px PT Mono';
+        ctx.fillStyle = '#000000';
+        for(var i = 0; i < lines.length; i++) {
+          ctx.fillText(lines[i], x - maxWidth / 2, y - (cloudHeight / 2) + (fontSize + 10) + (fontSize + 10) * i);
         }
         return lines;
       }
-      var maxWidth = 310;
+      var fontSize = 16;
+      var maxWidth = fontSize * 13;
       var textMessage;
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          // Отрисовка черного многоугольника, который выступает в качестве тени.
-          this.ctx.beginPath();
-          this.ctx.moveTo(140, 200);
-          this.ctx.lineTo(90, 120);
-          this.ctx.lineTo(140, 40);
-          this.ctx.lineTo(430, 40);
-          this.ctx.lineTo(480, 120);
-          this.ctx.lineTo(430, 200);
-          this.ctx.closePath();
-          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          this.ctx.fill();
-          // Отрисовка основного белого многоугольника, который выступает в качестве фона сообщения.
-          this.ctx.beginPath();
-          this.ctx.moveTo(130, 190);
-          this.ctx.lineTo(80, 110);
-          this.ctx.lineTo(130, 30);
-          this.ctx.lineTo(420, 30);
-          this.ctx.lineTo(470, 110);
-          this.ctx.lineTo(420, 190);
-          this.ctx.closePath();
-          this.ctx.fillStyle = '#FFFFFF';
-          this.ctx.fill();
-          // Текст выводимого сообщения.
-          this.ctx.font = '16px PT Mono';
-          this.ctx.textBaseline = 'hanging';
-          this.ctx.fillStyle = '#000000';
           textMessage = 'Огненный шар достиг цели и ты победил! ' +
                         'Для продолжения нажмите "Пробел".';
-          this.ctx.font = '16px PT Mono';
-          this.ctx.textBaseline = 'hanging';
-          this.ctx.fillStyle = '#000000';
-          fragmentText(this.ctx, textMessage, maxWidth);
+          fragmentText(this.ctx, textMessage, maxWidth, 350, 120);
           console.log('you have won!');
           break;
         case Verdict.FAIL:
-          // Отрисовка черного многоугольника, который выступает в качестве тени.
-          this.ctx.beginPath();
-          this.ctx.moveTo(140, 200);
-          this.ctx.lineTo(90, 120);
-          this.ctx.lineTo(140, 40);
-          this.ctx.lineTo(430, 40);
-          this.ctx.lineTo(480, 120);
-          this.ctx.lineTo(430, 200);
-          this.ctx.closePath();
-          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          this.ctx.fill();
-          // Отрисовка основного белого многоугольника, который выступает в качестве фона сообщения.
-          this.ctx.beginPath();
-          this.ctx.moveTo(130, 190);
-          this.ctx.lineTo(80, 110);
-          this.ctx.lineTo(130, 30);
-          this.ctx.lineTo(420, 30);
-          this.ctx.lineTo(470, 110);
-          this.ctx.lineTo(420, 190);
-          this.ctx.closePath();
-          this.ctx.fillStyle = '#FFFFFF';
-          this.ctx.fill();
-          // Текст выводимого сообщения.
-          this.ctx.font = '16px PT Mono';
-          this.ctx.textBaseline = 'hanging';
-          this.ctx.fillStyle = '#000000';
           textMessage = 'Незаметно подкралась тьма и поглотила Вас :-( ' +
                         'К сожалению Вы проиграли. Начать заново - нажмите "Пробел".';
-          this.ctx.font = '16px PT Mono';
-          this.ctx.textBaseline = 'hanging';
-          this.ctx.fillStyle = '#000000';
-          fragmentText(this.ctx, textMessage, maxWidth);
+          fragmentText(this.ctx, textMessage, maxWidth, 350, 120);
           console.log('you have failed!');
           break;
         case Verdict.PAUSE:
-          // Отрисовка черного многоугольника, который выступает в качестве тени.
-          this.ctx.beginPath();
-          this.ctx.moveTo(140, 200);
-          this.ctx.lineTo(90, 120);
-          this.ctx.lineTo(140, 40);
-          this.ctx.lineTo(430, 40);
-          this.ctx.lineTo(480, 120);
-          this.ctx.lineTo(430, 200);
-          this.ctx.closePath();
-          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          this.ctx.fill();
-          // Отрисовка основного белого многоугольника, который выступает в качестве фона сообщения.
-          this.ctx.beginPath();
-          this.ctx.moveTo(130, 190);
-          this.ctx.lineTo(80, 110);
-          this.ctx.lineTo(130, 30);
-          this.ctx.lineTo(420, 30);
-          this.ctx.lineTo(470, 110);
-          this.ctx.lineTo(420, 190);
-          this.ctx.closePath();
-          this.ctx.fillStyle = '#FFFFFF';
-          this.ctx.fill();
-          // Текст выводимого сообщения.
-          this.ctx.font = '16px PT Mono';
-          this.ctx.textBaseline = 'hanging';
-          this.ctx.fillStyle = '#000000';
           textMessage = 'Игра поставлена на паузу. Для продолжения нажмите "Пробел".';
-          this.ctx.font = '16px PT Mono';
-          this.ctx.textBaseline = 'hanging';
-          this.ctx.fillStyle = '#000000';
-          fragmentText(this.ctx, textMessage, maxWidth);
+          fragmentText(this.ctx, textMessage, maxWidth, 350, 120);
           console.log('game is on pause!');
           break;
         case Verdict.INTRO:
-          // Отрисовка черного многоугольника, который выступает в качестве тени.
-          this.ctx.beginPath();
-          this.ctx.moveTo(140, 200);
-          this.ctx.lineTo(90, 120);
-          this.ctx.lineTo(140, 40);
-          this.ctx.lineTo(430, 40);
-          this.ctx.lineTo(480, 120);
-          this.ctx.lineTo(430, 200);
-          this.ctx.closePath();
-          this.ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-          this.ctx.fill();
-          // Отрисовка основного белого многоугольника, который выступает в качестве фона сообщения.
-          this.ctx.beginPath();
-          this.ctx.moveTo(130, 190);
-          this.ctx.lineTo(80, 110);
-          this.ctx.lineTo(130, 30);
-          this.ctx.lineTo(420, 30);
-          this.ctx.lineTo(470, 110);
-          this.ctx.lineTo(420, 190);
-          this.ctx.closePath();
-          this.ctx.fillStyle = '#FFFFFF';
-          this.ctx.fill();
-          // Текст выводимого сообщения.
           textMessage = 'Вас приветствует Пендальф Синий. Я умею перемещаться с помощью ' +
-                        'стрелок "Влево" и "Вправо", Прыгать - стрелка "Вверх", ' +
+                        'стрелок "Влево" и "Вправо", прыгать - стрелка "Вверх", ' +
                         'стрелять файерболами - "Shift". Для продолжения нажмите "Пробел"';
-          this.ctx.font = '16px PT Mono';
-          this.ctx.textBaseline = 'hanging';
-          this.ctx.fillStyle = '#000000';
-          fragmentText(this.ctx, textMessage, maxWidth);
+          fragmentText(this.ctx, textMessage, maxWidth, 350, 120);
           console.log('welcome to the game! Press Space to start');
           break;
       }
