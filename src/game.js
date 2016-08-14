@@ -395,6 +395,16 @@ window.Game = (function() {
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      function drawMessageFigure(ctx, maxWidth, cloudHeight, x, y) {
+        ctx.beginPath();
+        ctx.moveTo(x - maxWidth / 2, y + cloudHeight / 2);
+        ctx.lineTo(x - 50 - maxWidth / 2, y);
+        ctx.lineTo(x - maxWidth / 2, y - cloudHeight / 2);
+        ctx.lineTo(x + maxWidth / 2, y - cloudHeight / 2);
+        ctx.lineTo(x + 50 + maxWidth / 2, y);
+        ctx.lineTo(x + maxWidth / 2, y + cloudHeight / 2);
+        ctx.closePath();
+      }
       function fragmentText(ctx, textMessage, maxWidth, x, y) {
         var words = textMessage.split(' '),
           lines = [],
@@ -424,25 +434,11 @@ window.Game = (function() {
         }
         var cloudHeight = (fontSize + 10) * lines.length + 20;
         //Отрисовка черного многоугольника, который выступает в качестве тени.
-        ctx.beginPath();
-        ctx.moveTo(x + 10 - maxWidth / 2, y + 10 + cloudHeight / 2);
-        ctx.lineTo(x - 40 - maxWidth / 2, y + 10);
-        ctx.lineTo(x + 10 - maxWidth / 2, y + 10 - cloudHeight / 2);
-        ctx.lineTo(x + 10 + maxWidth / 2, y + 10 - cloudHeight / 2);
-        ctx.lineTo(x + 60 + maxWidth / 2, y + 10);
-        ctx.lineTo(x + 10 + maxWidth / 2, y + 10 + cloudHeight / 2);
-        ctx.closePath();
-        // Отрисовка основного белого многоугольника, который выступает в качестве фона сообщения.
+        drawMessageFigure(ctx, maxWidth, cloudHeight, 360, 130);
         ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
         ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(x - maxWidth / 2, y + cloudHeight / 2);
-        ctx.lineTo(x - 50 - maxWidth / 2, y);
-        ctx.lineTo(x - maxWidth / 2, y - cloudHeight / 2);
-        ctx.lineTo(x + maxWidth / 2, y - cloudHeight / 2);
-        ctx.lineTo(x + 50 + maxWidth / 2, y);
-        ctx.lineTo(x + maxWidth / 2, y + cloudHeight / 2);
-        ctx.closePath();
+        // Отрисовка основного белого многоугольника, который выступает в качестве фона сообщения.
+        drawMessageFigure(ctx, maxWidth, cloudHeight, 350, 120);
         ctx.fillStyle = '#FFFFFF';
         ctx.fill();
         // Отрисовка текста.
